@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ShieldCheck, AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -13,13 +12,25 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  // Target superadmin password (from env or default)
+  const validPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'Aakritee@2026';
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg('');
     setIsLoading(true);
 
-    // Store dummy auth session token
     setTimeout(() => {
+      // Validate password
+      if (password !== validPassword) {
+        setErrorMsg('Invalid Security Password. Please check your credentials.');
+        setIsLoading(false);
+        return;
+      }
+
+      // Successful auth
       if (typeof window !== 'undefined') {
         localStorage.setItem('aakritee_auth', JSON.stringify({
           authenticated: true,
@@ -30,7 +41,7 @@ export default function LoginPage() {
       }
       setIsLoading(false);
       router.push('/');
-    }, 600);
+    }, 500);
   };
 
   return (
@@ -57,6 +68,13 @@ export default function LoginPage() {
         <div className="card login-card">
           <h1 className="login-title font-heading">Welcome Back</h1>
           <p className="login-subtitle">Art School Financial Ledger</p>
+
+          {errorMsg && (
+            <div className="error-banner">
+              <AlertCircle size={16} />
+              <span>{errorMsg}</span>
+            </div>
+          )}
 
           <form onSubmit={handleLogin} className="login-form">
             <div className="form-group">
@@ -105,7 +123,7 @@ export default function LoginPage() {
                 />
                 <span>Remember me</span>
               </label>
-              <a href="#forgot" onClick={(e) => { e.preventDefault(); alert('Password reset link sent to superadmin@aakritee.edu'); }} className="forgot-link font-heading">
+              <a href="#forgot" onClick={(e) => { e.preventDefault(); alert(`Default passcode is "${validPassword}". You can change it in Vercel environment variables.`); }} className="forgot-link font-heading">
                 Forgot?
               </a>
             </div>
@@ -207,7 +225,20 @@ export default function LoginPage() {
         .login-subtitle {
           font-size: 13px;
           color: #94A3B8;
-          margin-bottom: 28px;
+          margin-bottom: 24px;
+        }
+
+        .error-banner {
+          background-color: rgba(239, 68, 68, 0.15);
+          border: 1px solid #EF4444;
+          color: #EF4444;
+          padding: 10px 14px;
+          border-radius: 8px;
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 20px;
         }
 
         .login-form {
@@ -233,13 +264,17 @@ export default function LoginPage() {
           position: relative;
           display: flex;
           align-items: center;
+          width: 100%;
         }
 
-        .input-icon {
-          position: absolute;
-          left: 14px;
-          color: #64748B;
-          pointer-events: none;
+        :global(.input-icon) {
+          position: absolute !important;
+          left: 14px !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          color: #64748B !important;
+          pointer-events: none !important;
+          z-index: 10 !important;
         }
 
         .login-input {
@@ -260,19 +295,22 @@ export default function LoginPage() {
           border-color: #FED602;
         }
 
-        .toggle-password-btn {
-          position: absolute;
-          right: 14px;
-          background: transparent;
-          border: none;
-          color: #64748B;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
+        :global(.toggle-password-btn) {
+          position: absolute !important;
+          right: 14px !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          background: transparent !important;
+          border: none !important;
+          color: #64748B !important;
+          cursor: pointer !important;
+          display: flex !important;
+          align-items: center !important;
+          z-index: 10 !important;
         }
 
-        .toggle-password-btn:hover {
-          color: #F8FAFC;
+        :global(.toggle-password-btn:hover) {
+          color: #F8FAFC !important;
         }
 
         .form-options {
@@ -336,8 +374,8 @@ export default function LoginPage() {
           color: #64748B;
         }
 
-        .shield-icon {
-          color: #FED602;
+        :global(.shield-icon) {
+          color: #FED602 !important;
         }
 
         .login-footer {
