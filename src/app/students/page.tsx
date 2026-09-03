@@ -105,13 +105,13 @@ export default function StudentsPage() {
                 className="select-field"
               >
                 <option value="ALL">All Art Class Groups</option>
-                <option value="Cp-J">Cp-J - Junior Sketching</option>
-                <option value="Cp-L">Cp-L - Landscape</option>
-                <option value="Cp-U">Cp-U - Urban Sketching</option>
-                <option value="C">C - Composition</option>
-                <option value="B">B - Watercolor</option>
-                <option value="A">A - Acrylics</option>
-                <option value="A+">A+ - Portfolio Masterclass</option>
+                <option value="Cp-J">Cp-J</option>
+                <option value="Cp-L">Cp-L</option>
+                <option value="Cp-U">Cp-U</option>
+                <option value="C">C</option>
+                <option value="B">B</option>
+                <option value="A">A</option>
+                <option value="A+">A+</option>
               </select>
 
               <button className="btn-secondary filter-btn">

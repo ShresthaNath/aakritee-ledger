@@ -213,7 +213,7 @@ export const NewAdmissionModal: React.FC<NewAdmissionModalProps> = ({
                 >
                   {groups.map((g) => (
                     <option key={g.id} value={g.id}>
-                      {g.name} - {g.code}
+                      {g.name}
                     </option>
                   ))}
                 </select>
