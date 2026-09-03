@@ -35,8 +35,8 @@ export const Sidebar: React.FC = () => {
               href={item.href}
               className={`nav-link ${isActive ? 'active' : ''}`}
             >
-              <Icon size={18} className="nav-icon" />
-              <span>{item.name}</span>
+              <Icon size={20} className="nav-icon" />
+              <span className="nav-text">{item.name}</span>
             </Link>
           );
         })}
@@ -73,7 +73,7 @@ export const Sidebar: React.FC = () => {
         .sidebar-logo {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
           padding: 0 24px 20px 24px;
           border-bottom: 1px solid var(--border-color);
         }
@@ -94,15 +94,15 @@ export const Sidebar: React.FC = () => {
         .sidebar-nav {
           display: flex;
           flex-direction: column;
-          gap: 4px;
-          margin-top: 16px;
+          gap: 6px;
+          margin-top: 20px;
           flex: 1;
         }
 
         .nav-link {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 16px;
           padding: 12px 24px;
           width: 100%;
           color: var(--text-secondary);
@@ -111,6 +111,7 @@ export const Sidebar: React.FC = () => {
           font-weight: 500;
           font-size: 14px;
           border-left: 4px solid transparent;
+          background-color: transparent;
           transition: all 0.2s ease;
           box-sizing: border-box;
         }
@@ -121,26 +122,31 @@ export const Sidebar: React.FC = () => {
           text-decoration: none !important;
         }
 
+        /* Highlight ONLY the active route page */
         .nav-link.active {
           color: var(--text-primary) !important;
           background-color: var(--accent-yellow-subtle) !important;
-          border-left-color: var(--accent-yellow) !important;
+          border-left: 4px solid var(--accent-yellow) !important;
           font-weight: 600 !important;
           text-decoration: none !important;
+        }
+
+        .nav-text {
+          white-space: nowrap;
         }
 
         .sidebar-footer {
           display: flex;
           flex-direction: column;
           gap: 8px;
-          padding: 16px 12px 0 12px;
+          padding: 16px 16px 0 16px;
           border-top: 1px solid var(--border-color);
         }
 
         .footer-link {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 14px;
           padding: 10px 14px;
           color: var(--text-secondary);
           text-decoration: none !important;
