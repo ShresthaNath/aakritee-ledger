@@ -65,7 +65,7 @@ export default function SettingsPage() {
 
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar onOpenNewAdmission={() => setIsNewAdmissionOpen(true)} />
       <div className="main-layout">
         <Header onOpenNewAdmission={() => setIsNewAdmissionOpen(true)} />
 

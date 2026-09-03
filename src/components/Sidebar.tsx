@@ -3,10 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutGrid, Users, Database, Settings, Sun, Moon, LogOut } from 'lucide-react';
+import { LayoutGrid, Users, Database, Settings, Sun, Moon, LogOut, Plus } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  onOpenNewAdmission?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ onOpenNewAdmission }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
@@ -34,7 +38,17 @@ export const Sidebar: React.FC = () => {
         <span className="ledger-title font-heading">Ledger</span>
       </div>
 
-      {/* Nav Items Matching Figma Nodes 204:600, 204:604, 204:608, 204:612 */}
+      {/* New Admission Button in Sidebar */}
+      {onOpenNewAdmission && (
+        <div className="sidebar-action-box">
+          <button className="sidebar-admission-btn font-heading" onClick={onOpenNewAdmission}>
+            <Plus size={18} />
+            <span>New Admission</span>
+          </button>
+        </div>
+      )}
+
+      {/* Nav Items */}
       <nav className="sidebar-nav">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -120,18 +134,45 @@ export const Sidebar: React.FC = () => {
           letter-spacing: -0.3px;
         }
 
+        .sidebar-action-box {
+          padding: 16px 20px 0 20px;
+        }
+
+        .sidebar-admission-btn {
+          width: 100%;
+          height: 42px;
+          background-color: var(--accent-yellow);
+          color: #070A16;
+          border: none;
+          border-radius: 20px;
+          font-size: 14px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 10px rgba(254, 214, 2, 0.2);
+        }
+
+        .sidebar-admission-btn:hover {
+          background-color: var(--accent-yellow-hover);
+          transform: translateY(-1px);
+        }
+
         .sidebar-nav {
           display: flex;
           flex-direction: column;
           gap: 6px;
-          margin-top: 20px;
+          margin-top: 16px;
           flex: 1;
         }
 
         .nav-link {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 12px !important; /* Strictly 12px space between icon and text */
           padding: 12px 24px;
           width: 100%;
           color: var(--text-secondary);
@@ -143,6 +184,11 @@ export const Sidebar: React.FC = () => {
           background-color: transparent;
           transition: all 0.2s ease;
           box-sizing: border-box;
+        }
+
+        :global(.nav-icon) {
+          margin-right: 0 !important;
+          flex-shrink: 0 !important;
         }
 
         .nav-link:hover {

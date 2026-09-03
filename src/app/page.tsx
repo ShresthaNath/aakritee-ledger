@@ -24,7 +24,7 @@ export default function DashboardPage() {
 
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar onOpenNewAdmission={() => setIsModalOpen(true)} />
       <div className="main-layout">
         <Header onOpenNewAdmission={() => setIsModalOpen(true)} />
 
