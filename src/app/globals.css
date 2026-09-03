@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@700&display=swap');
+
+:root {
+  /* Dark Mode (Electric Tech Default) */
+  --bg-deep: #070A16;
+  --bg-sidebar: #0C1024;
+  --bg-surface: #11162E;
+  --bg-surface-hover: #171E3C;
+  --border-color: #1D264A;
+  --border-light: rgba(253, 214, 2, 0.2);
+  
+  --accent-yellow: #FCD602;
+  --accent-yellow-hover: #E5C200;
+  --accent-yellow-subtle: rgba(252, 214, 2, 0.12);
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #8E9AD2;
+  --text-muted: #556194;
+  
+  --status-active-bg: rgba(16, 185, 129, 0.15);
+  --status-active-text: #10B981;
+  --status-inactive-bg: rgba(239, 68, 68, 0.15);
+  --status-inactive-text: #EF4444;
+  --status-pending-bg: rgba(239, 68, 68, 0.15);
+  --status-pending-text: #EF4444;
+  --status-paid-bg: rgba(16, 185, 129, 0.15);
+  --status-paid-text: #10B981;
+  --status-warning-bg: rgba(245, 158, 11, 0.15);
+  --status-warning-text: #F59E0B;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(252, 214, 2, 0.25);
+  --shadow-red-glow: 0 0 18px rgba(239, 68, 68, 0.3);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-logo: 'Caveat', cursive, sans-serif;
+}
+
+[data-theme='light'] {
+  --bg-deep: #F4F6FC;
+  --bg-sidebar: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --bg-surface-hover: #F8FAFC;
+  --border-color: #E2E8F0;
+  --border-light: rgba(252, 214, 2, 0.3);
+  
+  --accent-yellow: #FCD602;
+  --accent-yellow-hover: #E5C200;
+  --accent-yellow-subtle: rgba(252, 214, 2, 0.2);
+  
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --status-active-bg: #DCFCE7;
+  --status-active-text: #166534;
+  --status-inactive-bg: #FEE2E2;
+  --status-inactive-text: #991B1B;
+  --status-pending-bg: #FEE2E2;
+  --status-pending-text: #991B1B;
+  --status-paid-bg: #DCFCE7;
+  --status-paid-text: #166534;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 15px rgba(252, 214, 2, 0.3);
+  --shadow-red-glow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+}
+
+/* Fix for Hyperlinks */
+a {
+  color: inherit;
+  text-decoration: none !important;
+}
+a:hover {
+  text-decoration: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Common UI Components */
+.btn-primary {
+  background-color: var(--accent-yellow);
+  color: #070A16;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(252, 214, 2, 0.2);
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background-color: var(--accent-yellow-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-secondary:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--text-muted);
+}
+
+.btn-danger {
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-text);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-danger:hover {
+  background-color: rgba(239, 68, 68, 0.25);
+}
+
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: all 0.25s ease;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-active {
+  background-color: var(--status-active-bg);
+  color: var(--status-active-text);
+}
+.badge-inactive {
+  background-color: var(--status-inactive-bg);
+  color: var(--status-inactive-text);
+}
+.badge-pending {
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+.badge-paid {
+  background-color: var(--status-paid-bg);
+  color: var(--status-paid-text);
+}
+
+.input-field {
+  width: 100%;
+  background-color: var(--bg-deep);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.input-field:focus {
+  border-color: var(--accent-yellow);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
