@@ -85,9 +85,9 @@ export const Sidebar: React.FC = () => {
         }
 
         .ledger-title {
-          font-weight: 700;
+          font-weight: 800;
           font-size: 20px;
-          color: #FED602;
+          color: var(--text-primary);
           letter-spacing: -0.3px;
         }
 
@@ -105,7 +105,7 @@ export const Sidebar: React.FC = () => {
           gap: 12px;
           padding: 12px 24px;
           width: 100%;
-          color: #8A94C2;
+          color: var(--text-secondary);
           text-decoration: none !important;
           font-family: var(--font-body);
           font-weight: 500;
@@ -116,15 +116,15 @@ export const Sidebar: React.FC = () => {
         }
 
         .nav-link:hover {
-          color: #FFFFFF;
-          background-color: rgba(255, 255, 255, 0.04);
+          color: var(--text-primary);
+          background-color: var(--bg-surface-hover);
           text-decoration: none !important;
         }
 
         .nav-link.active {
-          color: #FED602 !important;
-          background-color: rgba(254, 214, 2, 0.15) !important;
-          border-left-color: #FED602 !important;
+          color: var(--text-primary) !important;
+          background-color: var(--accent-yellow-subtle) !important;
+          border-left-color: var(--accent-yellow) !important;
           font-weight: 600 !important;
           text-decoration: none !important;
         }
@@ -142,7 +142,7 @@ export const Sidebar: React.FC = () => {
           align-items: center;
           gap: 12px;
           padding: 10px 14px;
-          color: #8A94C2;
+          color: var(--text-secondary);
           text-decoration: none !important;
           font-size: 13px;
           font-weight: 500;
@@ -155,8 +155,8 @@ export const Sidebar: React.FC = () => {
         }
 
         .footer-link:hover {
-          color: #FFFFFF;
-          background-color: rgba(255, 255, 255, 0.04);
+          color: var(--text-primary);
+          background-color: var(--bg-surface-hover);
         }
 
         .logout-btn {
