@@ -110,6 +110,19 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
             </div>
 
             <nav className="drawer-nav">
+              <div className="drawer-admission-box">
+                <button
+                  className="btn-primary drawer-admission-btn"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenNewAdmission();
+                  }}
+                >
+                  <Plus size={18} />
+                  <span>New Admission</span>
+                </button>
+              </div>
+
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href;
@@ -339,6 +352,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           gap: 4px;
           margin-top: 16px;
           flex: 1;
+        }
+
+        .drawer-admission-box {
+          padding: 0 16px 12px 16px;
+        }
+
+        .drawer-admission-btn {
+          width: 100%;
+          justify-content: center;
+          height: 42px;
+          border-radius: 20px;
         }
 
         .drawer-link {

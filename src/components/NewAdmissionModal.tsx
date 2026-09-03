@@ -123,7 +123,7 @@ export const NewAdmissionModal: React.FC<NewAdmissionModalProps> = ({
                 className={`group-pill ${selectedGroupId === g.id ? 'active' : ''}`}
                 onClick={() => handleGroupChange(g.id)}
               >
-                {g.name} ({g.prefix_id})
+                {g.name}
               </button>
             ))}
           </div>
@@ -213,7 +213,7 @@ export const NewAdmissionModal: React.FC<NewAdmissionModalProps> = ({
                 >
                   {groups.map((g) => (
                     <option key={g.id} value={g.id}>
-                      {g.name} (Code: {g.prefix_id}) - {g.code}
+                      {g.name} - {g.code}
                     </option>
                   ))}
                 </select>
@@ -429,18 +429,45 @@ export const NewAdmissionModal: React.FC<NewAdmissionModalProps> = ({
           color: var(--text-secondary);
         }
 
-        .auto-roll-box {
+        .input-field {
+          width: 100%;
+          height: 44px;
           background-color: var(--bg-deep);
-          border: 1px solid var(--accent-yellow);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-md);
+          color: var(--text-primary);
+          padding: 0 14px;
+          font-size: 14px;
+          font-family: var(--font-body);
+          outline: none;
+          transition: border-color 0.2s ease;
+          box-sizing: border-box;
+        }
+
+        .input-field option {
+          background-color: var(--bg-surface);
+          color: var(--text-primary);
+        }
+
+        .input-field:focus {
+          border-color: var(--accent-yellow);
+        }
+
+        .auto-roll-box {
+          width: 100%;
+          height: 44px;
+          background-color: var(--bg-deep);
+          border: 1px solid var(--border-color);
           color: var(--accent-yellow);
           font-family: var(--font-heading);
           font-weight: 800;
           font-size: 15px;
-          padding: 12px 16px;
+          padding: 0 14px;
           border-radius: var(--radius-md);
           display: flex;
           align-items: center;
           gap: 10px;
+          box-sizing: border-box;
         }
 
         .modal-actions {

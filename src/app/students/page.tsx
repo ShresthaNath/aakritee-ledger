@@ -6,8 +6,8 @@ import { Header } from '@/components/Header';
 import { NewAdmissionModal } from '@/components/NewAdmissionModal';
 import { EditStudentModal } from '@/components/EditStudentModal';
 import { DataService } from '@/lib/dataService';
-import { Student, StudentStatus } from '@/lib/types';
-import { Search, Filter, Trash2, Edit2, Phone, MessageSquare } from 'lucide-react';
+import { Student } from '@/lib/types';
+import { Search, Filter, Trash2, Edit2, MessageSquare } from 'lucide-react';
 
 export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -105,13 +105,13 @@ export default function StudentsPage() {
                 className="select-field"
               >
                 <option value="ALL">All Art Class Groups</option>
-                <option value="Cp-J">Cp-J (Junior Sketching)</option>
-                <option value="Cp-L">Cp-L (Landscape)</option>
-                <option value="Cp-U">Cp-U (Urban Sketching)</option>
-                <option value="C">C (Composition)</option>
-                <option value="B">B (Watercolor)</option>
-                <option value="A">A (Acrylics)</option>
-                <option value="A+">A+ (Portfolio Masterclass)</option>
+                <option value="Cp-J">Cp-J - Junior Sketching</option>
+                <option value="Cp-L">Cp-L - Landscape</option>
+                <option value="Cp-U">Cp-U - Urban Sketching</option>
+                <option value="C">C - Composition</option>
+                <option value="B">B - Watercolor</option>
+                <option value="A">A - Acrylics</option>
+                <option value="A+">A+ - Portfolio Masterclass</option>
               </select>
 
               <button className="btn-secondary filter-btn">
@@ -222,7 +222,18 @@ export default function StudentsPage() {
                     </button>
                   </div>
                   <h3 className="mobile-student-name">{s.name}</h3>
-                  <p className="mobile-guardian">Guardian: {s.guardian_name} ({s.phone})</p>
+                  <div className="mobile-guardian-row">
+                    <span className="guardian-label">Guardian: {s.guardian_name}</span>
+                    <a
+                      href={`https://wa.me/${s.phone.replace(/[^0-9]/g, '')}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mobile-wa-link"
+                    >
+                      <MessageSquare size={13} className="wa-icon" />
+                      <span>{s.phone}</span>
+                    </a>
+                  </div>
 
                   <div className="mobile-card-bottom">
                     <span className="mobile-reg-date">Registered {s.registered_date}</span>
@@ -298,16 +309,16 @@ export default function StudentsPage() {
         }
 
         .toggle-pill-container {
+          display: flex;
           background-color: var(--bg-surface);
           border: 1px solid var(--border-color);
-          padding: 4px;
           border-radius: 24px;
-          display: flex;
+          padding: 4px;
           gap: 4px;
         }
 
         .toggle-tab {
-          padding: 8px 18px;
+          padding: 8px 20px;
           border-radius: 20px;
           border: none;
           background: transparent;
@@ -326,25 +337,24 @@ export default function StudentsPage() {
         .filter-bar {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           gap: 16px;
           margin-bottom: 24px;
         }
 
         .search-box {
           position: relative;
-          display: flex;
-          align-items: center;
           flex: 1;
+          max-width: 400px;
         }
 
-        .search-icon {
+        :global(.search-icon) {
           position: absolute;
-          left: 16px;
+          left: 14px;
           top: 50%;
           transform: translateY(-50%);
           color: var(--text-muted);
           pointer-events: none;
-          z-index: 5;
         }
 
         .filter-input {
@@ -352,14 +362,12 @@ export default function StudentsPage() {
           height: 42px;
           background-color: var(--bg-surface);
           border: 1px solid var(--border-color);
-          color: var(--text-primary);
-          padding-left: 44px;
+          border-radius: 20px;
+          padding-left: 42px;
           padding-right: 16px;
-          border-radius: var(--radius-md);
-          font-family: var(--font-body);
-          font-size: 13px;
+          color: var(--text-primary);
+          font-size: 14px;
           outline: none;
-          transition: border-color 0.2s ease;
         }
 
         .filter-input:focus {
@@ -368,6 +376,7 @@ export default function StudentsPage() {
 
         .filter-group {
           display: flex;
+          align-items: center;
           gap: 12px;
         }
 
@@ -375,19 +384,12 @@ export default function StudentsPage() {
           height: 42px;
           background-color: var(--bg-surface);
           border: 1px solid var(--border-color);
-          color: var(--text-primary);
+          border-radius: 20px;
           padding: 0 16px;
-          border-radius: var(--radius-md);
+          color: var(--text-primary);
           font-size: 13px;
           outline: none;
           cursor: pointer;
-        }
-
-        .filter-btn {
-          height: 42px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
         }
 
         .table-card {
@@ -396,7 +398,6 @@ export default function StudentsPage() {
         }
 
         .table-responsive {
-          width: 100%;
           overflow-x: auto;
         }
 
@@ -407,13 +408,13 @@ export default function StudentsPage() {
         }
 
         .data-table th {
+          background-color: var(--bg-surface-hover);
+          color: var(--text-secondary);
           font-size: 11px;
           font-weight: 700;
-          color: var(--text-muted);
-          padding: 14px 20px;
-          border-bottom: 1px solid var(--border-color);
-          background-color: var(--bg-surface);
           letter-spacing: 0.5px;
+          padding: 16px 20px;
+          border-bottom: 1px solid var(--border-color);
         }
 
         .data-table td {
@@ -439,26 +440,32 @@ export default function StudentsPage() {
         }
 
         .sub-text {
-          font-size: 11px;
+          font-size: 12px;
           color: var(--text-muted);
         }
 
         .phone-box {
           display: flex;
           flex-direction: column;
+          gap: 2px;
         }
 
         .guardian-text {
           font-weight: 500;
         }
 
-        .phone-link {
-          font-size: 12px;
-          color: #25D366;
-          text-decoration: none !important;
+        .phone-link, .mobile-wa-link {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
+          gap: 6px;
+          color: #22C55E;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .phone-link:hover, .mobile-wa-link:hover {
+          text-decoration: underline;
         }
 
         .group-chip {
@@ -472,8 +479,8 @@ export default function StudentsPage() {
         }
 
         .date-cell {
-          font-size: 13px;
           color: var(--text-secondary);
+          font-size: 13px;
         }
 
         .status-chip {
@@ -486,25 +493,26 @@ export default function StudentsPage() {
         }
 
         .status-active {
-          background-color: var(--status-active-bg);
-          color: var(--status-active-text);
+          background-color: rgba(34, 197, 94, 0.15);
+          color: #22C55E;
         }
 
         .status-inactive {
-          background-color: rgba(160, 165, 181, 0.2);
-          color: var(--text-muted);
+          background-color: rgba(239, 68, 68, 0.15);
+          color: #EF4444;
         }
 
         .action-buttons {
           display: flex;
+          align-items: center;
           gap: 8px;
         }
 
         .icon-btn {
-          width: 32px;
-          height: 32px;
-          border-radius: var(--radius-sm);
-          background-color: var(--bg-deep);
+          width: 30px;
+          height: 30px;
+          border-radius: 6px;
+          background: transparent;
           border: 1px solid var(--border-color);
           color: var(--text-secondary);
           display: flex;
@@ -515,22 +523,23 @@ export default function StudentsPage() {
         }
 
         .icon-btn.edit:hover {
-          border-color: var(--accent-yellow);
           color: var(--accent-yellow);
+          border-color: var(--accent-yellow);
+          background-color: var(--accent-yellow-subtle);
         }
 
         .icon-btn.delete:hover {
-          border-color: #EF4444;
           color: #EF4444;
+          border-color: #EF4444;
+          background-color: rgba(239, 68, 68, 0.1);
         }
 
         .empty-state {
           text-align: center;
-          padding: 40px;
           color: var(--text-muted);
+          padding: 40px !important;
         }
 
-        /* Mobile specific card styles */
         .mobile-students-list {
           display: none;
           flex-direction: column;
@@ -541,7 +550,7 @@ export default function StudentsPage() {
           padding: 16px;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 10px;
         }
 
         .mobile-card-top {
@@ -551,56 +560,48 @@ export default function StudentsPage() {
         }
 
         .mobile-roll {
-          font-size: 12px;
-          font-weight: 700;
+          font-size: 13px;
+          font-weight: 800;
           color: var(--accent-yellow);
         }
 
         .mobile-student-name {
           font-size: 16px;
+          font-weight: 700;
           color: var(--text-primary);
-          margin: 0;
         }
 
-        .mobile-guardian {
-          font-size: 12px;
+        .mobile-guardian-row {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-size: 13px;
           color: var(--text-secondary);
-          margin: 0;
+        }
+
+        .guardian-label {
+          color: var(--text-secondary);
         }
 
         .mobile-card-bottom {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-top: 8px;
-          padding-top: 8px;
+          padding-top: 10px;
           border-top: 1px solid var(--border-color);
         }
 
         .mobile-reg-date {
-          font-size: 11px;
+          font-size: 12px;
           color: var(--text-muted);
         }
 
-        .desktop-only-table {
-          display: block;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .main-layout {
             margin-left: 0;
-            padding-bottom: 90px;
           }
           .content-area {
-            padding: 16px 16px 90px 16px;
-          }
-          .page-header-row {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-          }
-          .filter-bar {
-            flex-direction: column;
+            padding: 16px;
           }
           .desktop-only-table {
             display: none;
@@ -608,8 +609,17 @@ export default function StudentsPage() {
           .mobile-students-list {
             display: flex;
           }
-          .desktop-only {
-            display: none;
+          .page-header-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+          }
+          .filter-bar {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .search-box {
+            max-width: 100%;
           }
         }
       `}</style>

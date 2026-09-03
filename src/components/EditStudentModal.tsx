@@ -98,7 +98,7 @@ export const EditStudentModal: React.FC<EditStudentModalProps> = ({
               >
                 {groups.map((g) => (
                   <option key={g.id} value={g.id}>
-                    {g.name} ({g.code || 'Group'})
+                    {g.name} - {g.code || 'Group'}
                   </option>
                 ))}
               </select>
