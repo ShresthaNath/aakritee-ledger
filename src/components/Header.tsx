@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { Search, Plus, Sun, Moon, Menu, X, LayoutGrid, Users, Database, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 
+import { useRouter } from 'next/navigation';
+
 interface HeaderProps {
   onOpenNewAdmission: () => void;
   onSearchChange?: (query: string) => void;
@@ -14,8 +16,16 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChange }) => {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('aakritee_auth');
+    }
+    router.push('/login');
+  };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -71,13 +81,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
             <span>New Admission</span>
           </button>
 
-          <Link href="/login" className="user-profile" title="View Login / Admin Portal">
+          <div className="user-profile-box">
             <div className="avatar font-heading">SA</div>
             <div className="user-info">
               <span className="user-name font-heading">SuperAdmin</span>
               <span className="user-role">INSTITUTIONAL LEAD</span>
             </div>
-          </Link>
+            <button className="logout-icon-btn" onClick={handleLogout} title="Sign Out">
+              <LogOut size={16} />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -199,24 +212,29 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           color: var(--accent-yellow);
         }
 
-        .user-profile {
+        .user-profile-box {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
+          padding: 4px 10px 4px 4px;
+          border: 1px solid var(--border-color);
+          border-radius: 30px;
+          background-color: var(--bg-surface);
         }
 
         .avatar {
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
-          background-color: var(--bg-surface);
+          background-color: var(--bg-deep);
           border: 2px solid var(--accent-yellow);
           color: var(--accent-yellow);
-          font-weight: 700;
+          font-weight: 800;
           font-size: 13px;
           display: flex;
           align-items: center;
           justify-content: center;
+          flex-shrink: 0;
         }
 
         .user-info {
@@ -229,6 +247,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           font-size: 13px;
           color: var(--text-primary);
           line-height: 1.2;
+          white-space: nowrap;
         }
 
         .user-role {
@@ -236,6 +255,28 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           font-weight: 600;
           color: var(--text-muted);
           letter-spacing: 0.5px;
+          white-space: nowrap;
+        }
+
+        .logout-icon-btn {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: transparent;
+          border: 1px solid var(--border-color);
+          color: var(--text-muted);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          margin-left: 4px;
+        }
+
+        .logout-icon-btn:hover {
+          color: var(--status-red);
+          border-color: var(--status-red);
+          background-color: rgba(239, 68, 68, 0.1);
         }
 
         /* Mobile Drawer */
