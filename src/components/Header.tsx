@@ -71,13 +71,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
             <span>New Admission</span>
           </button>
 
-          <div className="user-profile">
+          <Link href="/login" className="user-profile" title="View Login / Admin Portal">
             <div className="avatar font-heading">SA</div>
             <div className="user-info">
               <span className="user-name font-heading">SuperAdmin</span>
               <span className="user-role">INSTITUTIONAL LEAD</span>
             </div>
-          </div>
+          </Link>
         </div>
       </header>
 

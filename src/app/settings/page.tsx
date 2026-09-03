@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { NewAdmissionModal } from '@/components/NewAdmissionModal';
 import { DataService } from '@/lib/dataService';
 import { ArtGroup, PaymentModeSetting } from '@/lib/types';
-import { Plus, Download, Database, ChevronRight, Check } from 'lucide-react';
+import { Plus, Download, Database, ChevronRight, Check, Edit2, Trash2, Save, X } from 'lucide-react';
 
 export default function SettingsPage() {
   const [groups, setGroups] = useState<ArtGroup[]>([]);
@@ -14,6 +14,10 @@ export default function SettingsPage() {
   const [isNewAdmissionOpen, setIsNewAdmissionOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
   const [showAddGroupForm, setShowAddGroupForm] = useState(false);
+
+  // Group editing state
+  const [editingGroupId, setEditingGroupId] = useState<string | null>(null);
+  const [editingGroupName, setEditingGroupName] = useState('');
 
   const loadData = () => {
     setGroups(DataService.getGroups());
@@ -37,6 +41,26 @@ export default function SettingsPage() {
     setNewGroupName('');
     setShowAddGroupForm(false);
     loadData();
+  };
+
+  const handleStartEditGroup = (group: ArtGroup) => {
+    setEditingGroupId(group.id);
+    setEditingGroupName(group.name);
+  };
+
+  const handleSaveEditGroup = (groupId: string) => {
+    if (!editingGroupName.trim()) return;
+    DataService.updateGroup(groupId, editingGroupName.trim());
+    setEditingGroupId(null);
+    setEditingGroupName('');
+    loadData();
+  };
+
+  const handleDeleteGroup = (groupId: string, groupName: string) => {
+    if (confirm(`Are you sure you want to delete group "${groupName}"?`)) {
+      DataService.deleteGroup(groupId);
+      loadData();
+    }
   };
 
   return (
@@ -85,15 +109,61 @@ export default function SettingsPage() {
               )}
 
               <div className="groups-list">
-                {groups.map((group) => (
-                  <div key={group.id} className="group-item-card">
-                    <div className="group-info">
-                      <span className="group-code font-heading">{group.name}</span>
-                      <span className="group-headcount">{group.active_headcount} Enrolled Students</span>
+                {groups.map((group) => {
+                  const isEditing = editingGroupId === group.id;
+                  return (
+                    <div key={group.id} className="group-item-card">
+                      {isEditing ? (
+                        <div className="inline-group-edit">
+                          <input
+                            type="text"
+                            value={editingGroupName}
+                            onChange={(e) => setEditingGroupName(e.target.value)}
+                            className="input-field group-edit-input font-heading"
+                            autoFocus
+                          />
+                          <button
+                            className="icon-btn save"
+                            onClick={() => handleSaveEditGroup(group.id)}
+                            title="Save Group Name"
+                          >
+                            <Save size={16} />
+                          </button>
+                          <button
+                            className="icon-btn cancel"
+                            onClick={() => setEditingGroupId(null)}
+                            title="Cancel"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="group-info">
+                            <span className="group-code font-heading">{group.name}</span>
+                            <span className="group-headcount">{group.active_headcount} Enrolled Students</span>
+                          </div>
+                          <div className="action-buttons">
+                            <button
+                              className="icon-btn edit"
+                              onClick={() => handleStartEditGroup(group)}
+                              title="Edit Group Code"
+                            >
+                              <Edit2 size={15} />
+                            </button>
+                            <button
+                              className="icon-btn delete"
+                              onClick={() => handleDeleteGroup(group.id, group.name)}
+                              title="Delete Group"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
-                    <ChevronRight size={18} className="chevron" />
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -288,8 +358,57 @@ export default function SettingsPage() {
           color: var(--text-secondary);
         }
 
-        .chevron {
+        .action-buttons {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .icon-btn {
+          width: 32px;
+          height: 32px;
+          border-radius: var(--radius-sm);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border-color);
+          background-color: var(--bg-surface);
+          color: var(--text-secondary);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .icon-btn.edit:hover {
+          color: var(--accent-yellow);
+          border-color: var(--accent-yellow);
+        }
+
+        .icon-btn.delete:hover {
+          color: var(--status-red);
+          border-color: var(--status-red);
+        }
+
+        .icon-btn.save {
+          color: var(--status-green);
+          border-color: var(--status-green);
+        }
+
+        .icon-btn.cancel {
           color: var(--text-muted);
+        }
+
+        .inline-group-edit {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          width: 100%;
+        }
+
+        .group-edit-input {
+          flex: 1;
+          height: 36px;
+          font-weight: 700;
+          color: var(--accent-yellow);
         }
 
         .payment-modes-list {

@@ -19,6 +19,7 @@ export default function AdmissionTrackerPage() {
   const [groups, setGroups] = useState<ArtGroup[]>([]);
   const [feeRecords, setFeeRecords] = useState<FeeRecord[]>([]);
   const [selectedGroupId, setSelectedGroupId] = useState<string>('');
+  const [selectedYear, setSelectedYear] = useState<number>(2026);
   const [isNewAdmissionOpen, setIsNewAdmissionOpen] = useState(false);
 
   // Modal State for Fee Payment Entry
@@ -55,7 +56,7 @@ export default function AdmissionTrackerPage() {
   // Helper to get fee record status for a student in a specific month
   const getFeeRecord = (studentId: string, month: string): FeeRecord | undefined => {
     return feeRecords.find(
-      (r) => r.student_id === studentId && (r.fee_period === month || r.month === month) && r.year === 2026
+      (r) => r.student_id === studentId && (r.fee_period === month || r.month === month) && r.year === selectedYear
     );
   };
 
@@ -72,7 +73,7 @@ export default function AdmissionTrackerPage() {
     DataService.recordPayment({
       student_id: selectedCell.student.id,
       fee_period: selectedCell.month,
-      year: 2026,
+      year: selectedYear,
       amount: Number(paymentAmount),
       status,
       payment_mode: paymentMode,
@@ -131,25 +132,42 @@ export default function AdmissionTrackerPage() {
             </div>
           </div>
 
-          {/* Group Filter Pills - Horizontally Scrollable on Mobile matching Figma Node 204:2131 */}
-          <div className="group-pills-row font-heading">
-            {groups.map((g) => (
-              <button
-                key={g.id}
-                className={`group-pill-btn ${selectedGroupId === g.id ? 'active' : ''}`}
-                onClick={() => setSelectedGroupId(g.id)}
+          {/* Group Filter Pills & Year Selector */}
+          <div className="filters-control-bar">
+            <div className="group-pills-row font-heading">
+              {groups.map((g) => (
+                <button
+                  key={g.id}
+                  className={`group-pill-btn ${selectedGroupId === g.id ? 'active' : ''}`}
+                  onClick={() => setSelectedGroupId(g.id)}
+                >
+                  <span>{g.name}</span>
+                  <span className="count-badge">{g.active_headcount}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="year-selector-wrapper">
+              <label className="year-label font-heading">LEDGER YEAR:</label>
+              <select
+                className="year-select-dropdown font-heading"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
               >
-                <span>{g.name}</span>
-                <span className="count-badge">{g.active_headcount}</span>
-              </button>
-            ))}
+                <option value={2024}>2024</option>
+                <option value={2025}>2025</option>
+                <option value={2026}>2026</option>
+                <option value={2027}>2027</option>
+                <option value={2028}>2028</option>
+              </select>
+            </div>
           </div>
 
           {/* Main Interactive Fee Matrix Table */}
           <div className="card matrix-card">
             <div className="matrix-header">
               <h3 className="matrix-title font-heading">
-                FEE LEDGER MATRIX — {currentGroup?.name || 'Cp-J'} GROUP (2026 ACADEMIC SESSION)
+                FEE LEDGER MATRIX — {currentGroup?.name || 'Cp-J'} GROUP ({selectedYear} ACADEMIC SESSION)
               </h3>
               <div className="legend">
                 <span className="legend-item"><span className="dot dot-paid" /> Paid</span>
@@ -352,13 +370,49 @@ export default function AdmissionTrackerPage() {
           gap: 12px;
         }
 
+        .filters-control-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 20px;
+          flex-wrap: wrap;
+        }
+
         .group-pills-row {
           display: flex;
           gap: 10px;
           overflow-x: auto;
-          padding-bottom: 8px;
-          margin-bottom: 24px;
+          padding-bottom: 4px;
+          flex: 1;
           scrollbar-width: thin;
+        }
+
+        .year-selector-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background-color: var(--bg-surface);
+          border: 1px solid var(--border-color);
+          padding: 6px 14px;
+          border-radius: 20px;
+        }
+
+        .year-label {
+          font-size: 11px;
+          font-weight: 800;
+          color: var(--text-secondary);
+          letter-spacing: 0.5px;
+        }
+
+        .year-select-dropdown {
+          background: transparent;
+          border: none;
+          color: var(--accent-yellow);
+          font-size: 14px;
+          font-weight: 800;
+          outline: none;
+          cursor: pointer;
         }
 
         .group-pill-btn {

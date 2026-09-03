@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { NewAdmissionModal } from '@/components/NewAdmissionModal';
+import { EditStudentModal } from '@/components/EditStudentModal';
 import { DataService } from '@/lib/dataService';
 import { Student, StudentStatus } from '@/lib/types';
 import { Search, Filter, Trash2, Edit2, Phone, MessageSquare } from 'lucide-react';
@@ -13,6 +14,7 @@ export default function StudentsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGroup, setSelectedGroup] = useState<string>('ALL');
   const [isNewAdmissionOpen, setIsNewAdmissionOpen] = useState(false);
+  const [studentToEdit, setStudentToEdit] = useState<Student | null>(null);
   const [activeTab, setActiveTab] = useState<'directory' | 'admission'>('directory');
 
   const loadData = () => {
@@ -179,7 +181,11 @@ export default function StudentsPage() {
                         </td>
                         <td>
                           <div className="action-buttons">
-                            <button className="icon-btn edit" title="Edit Student">
+                            <button
+                              className="icon-btn edit"
+                              title="Edit Student"
+                              onClick={() => setStudentToEdit(s)}
+                            >
                               <Edit2 size={15} />
                             </button>
                             <button
@@ -221,7 +227,7 @@ export default function StudentsPage() {
                   <div className="mobile-card-bottom">
                     <span className="mobile-reg-date">Registered {s.registered_date}</span>
                     <div className="action-buttons">
-                      <button className="icon-btn edit">
+                      <button className="icon-btn edit" onClick={() => setStudentToEdit(s)}>
                         <Edit2 size={14} />
                       </button>
                       <button className="icon-btn delete" onClick={() => handleDeleteStudent(s.id)}>
@@ -235,6 +241,13 @@ export default function StudentsPage() {
           </div>
         </main>
       </div>
+
+      <EditStudentModal
+        isOpen={Boolean(studentToEdit)}
+        student={studentToEdit}
+        onClose={() => setStudentToEdit(null)}
+        onStudentUpdated={loadData}
+      />
 
       <NewAdmissionModal
         isOpen={isNewAdmissionOpen}

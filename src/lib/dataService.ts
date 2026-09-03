@@ -177,10 +177,38 @@ export class DataService {
     }
   }
 
+  public static updateStudent(updatedStudent: Student): void {
+    const students = this.getStudents();
+    const index = students.findIndex((s) => s.id === updatedStudent.id);
+    if (index !== -1) {
+      students[index] = {
+        ...updatedStudent,
+        roll_no: updatedStudent.roll_number,
+      };
+      this.setStorage('students', students);
+    }
+  }
+
   public static deleteStudent(studentId: string): void {
     let students = this.getStudents();
     students = students.filter((s) => s.id !== studentId);
     this.setStorage('students', students);
+  }
+
+  public static updateGroup(groupId: string, name: string, code?: string): void {
+    const groups = this.getGroups();
+    const index = groups.findIndex((g) => g.id === groupId);
+    if (index !== -1) {
+      groups[index].name = name;
+      if (code) groups[index].code = code;
+      this.setStorage('groups', groups);
+    }
+  }
+
+  public static deleteGroup(groupId: string): void {
+    let groups = this.getGroups();
+    groups = groups.filter((g) => g.id !== groupId);
+    this.setStorage('groups', groups);
   }
 
   public static getFeeRecords(): FeeRecord[] {
