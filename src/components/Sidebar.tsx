@@ -2,11 +2,21 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { LayoutGrid, Users, Database, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { LayoutGrid, Users, Database, Settings, Sun, Moon, LogOut } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 export const Sidebar: React.FC = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('aakritee_auth');
+    }
+    router.push('/login');
+  };
 
   const navItems = [
     { name: 'Dashboard', href: '/', icon: LayoutGrid },
@@ -42,16 +52,35 @@ export const Sidebar: React.FC = () => {
         })}
       </nav>
 
-      {/* Sidebar Footer Matching Figma Spec */}
+      {/* Sidebar Footer with Theme Toggle & User Profile Card */}
       <div className="sidebar-footer">
-        <a href="#help" className="footer-link">
-          <HelpCircle size={18} />
-          <span>Help Center</span>
-        </a>
-        <button className="footer-link logout-btn">
-          <LogOut size={18} />
-          <span>Sign Out</span>
+        {/* Theme Toggle Button */}
+        <button
+          className="theme-toggle-btn"
+          onClick={toggleTheme}
+          title="Toggle Theme"
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          <span className="theme-text">{theme === 'dark' ? 'Light Theme' : 'Dark Theme'}</span>
         </button>
+
+        {/* User Profile Badge & Logout */}
+        <div className="sidebar-user-card">
+          <div className="user-info-group">
+            <div className="avatar font-heading">SA</div>
+            <div className="user-details">
+              <span className="user-name font-heading">SuperAdmin</span>
+              <span className="user-role">INSTITUTIONAL LEAD</span>
+            </div>
+          </div>
+          <button
+            className="sidebar-logout-btn"
+            onClick={handleLogout}
+            title="Sign Out"
+          >
+            <LogOut size={16} />
+          </button>
+        </div>
       </div>
 
       <style jsx>{`
@@ -65,7 +94,7 @@ export const Sidebar: React.FC = () => {
           border-right: 1px solid var(--border-color);
           display: flex;
           flex-direction: column;
-          padding: 24px 0;
+          padding: 24px 0 16px 0;
           z-index: 40;
           transition: background-color 0.25s ease, border-color 0.25s ease;
         }
@@ -138,39 +167,103 @@ export const Sidebar: React.FC = () => {
         .sidebar-footer {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 12px;
           padding: 16px 16px 0 16px;
           border-top: 1px solid var(--border-color);
         }
 
-        .footer-link {
+        .theme-toggle-btn {
           display: flex;
           align-items: center;
-          gap: 14px;
+          gap: 12px;
           padding: 10px 14px;
-          color: var(--text-secondary);
-          text-decoration: none !important;
-          font-size: 13px;
-          font-weight: 500;
-          background: none;
-          border: none;
-          cursor: pointer;
-          border-radius: var(--radius-md);
-          transition: all 0.2s ease;
           width: 100%;
+          background-color: var(--bg-surface);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          color: var(--text-secondary);
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
         }
 
-        .footer-link:hover {
+        .theme-toggle-btn:hover {
+          border-color: var(--accent-yellow);
+          color: var(--accent-yellow);
+        }
+
+        .sidebar-user-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px 10px;
+          background-color: var(--bg-surface);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+        }
+
+        .user-info-group {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .avatar {
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          background-color: var(--bg-deep);
+          border: 2px solid var(--accent-yellow);
+          color: var(--accent-yellow);
+          font-weight: 800;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .user-details {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .user-name {
+          font-weight: 700;
+          font-size: 12px;
           color: var(--text-primary);
-          background-color: var(--bg-surface-hover);
+          line-height: 1.2;
+          white-space: nowrap;
         }
 
-        .logout-btn {
-          color: #FF4D4D;
+        .user-role {
+          font-size: 9px;
+          font-weight: 600;
+          color: var(--text-muted);
+          letter-spacing: 0.5px;
+          white-space: nowrap;
         }
-        .logout-btn:hover {
-          color: #FF6B6B;
-          background-color: rgba(255, 77, 77, 0.1);
+
+        .sidebar-logout-btn {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: transparent;
+          border: 1px solid var(--border-color);
+          color: var(--text-muted);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .sidebar-logout-btn:hover {
+          color: #EF4444;
+          border-color: #EF4444;
+          background-color: rgba(239, 68, 68, 0.1);
         }
 
         @media (max-width: 1024px) {

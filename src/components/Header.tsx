@@ -387,6 +387,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           color: #FF4D4D;
         }
 
+        @media (min-width: 1025px) {
+          .header-bar {
+            display: none !important;
+          }
+        }
+
         @media (max-width: 1024px) {
           .header-bar {
             padding: 0 16px;

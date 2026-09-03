@@ -154,11 +154,11 @@ export default function AdmissionTrackerPage() {
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(Number(e.target.value))}
               >
-                <option value={2024}>2024</option>
-                <option value={2025}>2025</option>
-                <option value={2026}>2026</option>
-                <option value={2027}>2027</option>
-                <option value={2028}>2028</option>
+                {Array.from({ length: 21 }, (_, i) => 2020 + i).map((yr) => (
+                  <option key={yr} value={yr} className="year-option">
+                    {yr}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -413,6 +413,13 @@ export default function AdmissionTrackerPage() {
           font-weight: 800;
           outline: none;
           cursor: pointer;
+        }
+
+        .year-select-dropdown option {
+          background-color: var(--bg-surface);
+          color: var(--accent-yellow);
+          font-weight: 700;
+          padding: 8px;
         }
 
         .group-pill-btn {
