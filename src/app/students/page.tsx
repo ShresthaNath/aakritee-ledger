@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
-import { MobileNav } from '@/components/MobileNav';
 import { NewAdmissionModal } from '@/components/NewAdmissionModal';
 import { DataService } from '@/lib/dataService';
 import { Student, StudentStatus } from '@/lib/types';
@@ -235,8 +234,6 @@ export default function StudentsPage() {
             )}
           </div>
         </main>
-
-        <MobileNav />
       </div>
 
       <NewAdmissionModal

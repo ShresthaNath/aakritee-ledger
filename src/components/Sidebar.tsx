@@ -17,14 +17,14 @@ export const Sidebar: React.FC = () => {
 
   return (
     <aside className="sidebar">
-      {/* Brand Logo Using Exact Provided AakriteeLogo.png */}
+      {/* Brand Header */}
       <div className="sidebar-logo">
         {/* eslint-disable-next-html-element-suppress */}
         <img src="/AakriteeLogo.png" alt="Aakritee Logo" className="logo-img" />
         <span className="ledger-title font-heading">Ledger</span>
       </div>
 
-      {/* Navigation Items */}
+      {/* Nav Items Matching Figma Nodes 204:600, 204:604, 204:608, 204:612 */}
       <nav className="sidebar-nav">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -42,7 +42,7 @@ export const Sidebar: React.FC = () => {
         })}
       </nav>
 
-      {/* Sidebar Footer Matching Figma Node 204:136 */}
+      {/* Sidebar Footer Matching Figma Spec */}
       <div className="sidebar-footer">
         <a href="#help" className="footer-link">
           <HelpCircle size={18} />
@@ -65,7 +65,7 @@ export const Sidebar: React.FC = () => {
           border-right: 1px solid var(--border-color);
           display: flex;
           flex-direction: column;
-          padding: 24px 16px;
+          padding: 24px 0;
           z-index: 40;
           transition: background-color 0.25s ease, border-color 0.25s ease;
         }
@@ -74,7 +74,7 @@ export const Sidebar: React.FC = () => {
           display: flex;
           align-items: center;
           gap: 10px;
-          padding: 0 8px 24px 8px;
+          padding: 0 24px 20px 24px;
           border-bottom: 1px solid var(--border-color);
         }
 
@@ -87,51 +87,53 @@ export const Sidebar: React.FC = () => {
         .ledger-title {
           font-weight: 700;
           font-size: 20px;
-          color: #FCD602;
+          color: #FED602;
           letter-spacing: -0.3px;
         }
 
         .sidebar-nav {
           display: flex;
           flex-direction: column;
-          gap: 6px;
-          margin-top: 24px;
+          gap: 4px;
+          margin-top: 16px;
           flex: 1;
         }
 
         .nav-link {
           display: flex;
           align-items: center;
-          gap: 14px;
-          padding: 12px 16px;
-          border-radius: var(--radius-md);
-          color: #A0A5B5;
+          gap: 12px;
+          padding: 12px 24px;
+          width: 100%;
+          color: #8A94C2;
           text-decoration: none !important;
           font-family: var(--font-body);
-          font-weight: 600;
+          font-weight: 500;
           font-size: 14px;
+          border-left: 4px solid transparent;
           transition: all 0.2s ease;
-          border-left: 3px solid transparent;
+          box-sizing: border-box;
         }
 
         .nav-link:hover {
           color: #FFFFFF;
-          background-color: rgba(255, 255, 255, 0.05);
+          background-color: rgba(255, 255, 255, 0.04);
           text-decoration: none !important;
         }
 
         .nav-link.active {
-          color: #FCD602;
-          background-color: rgba(252, 214, 2, 0.1);
-          border-left-color: #FCD602;
+          color: #FED602 !important;
+          background-color: rgba(254, 214, 2, 0.15) !important;
+          border-left-color: #FED602 !important;
+          font-weight: 600 !important;
           text-decoration: none !important;
         }
 
         .sidebar-footer {
           display: flex;
           flex-direction: column;
-          gap: 12px;
-          padding-top: 16px;
+          gap: 8px;
+          padding: 16px 12px 0 12px;
           border-top: 1px solid var(--border-color);
         }
 
@@ -140,20 +142,21 @@ export const Sidebar: React.FC = () => {
           align-items: center;
           gap: 12px;
           padding: 10px 14px;
-          color: #A0A5B5;
+          color: #8A94C2;
           text-decoration: none !important;
           font-size: 13px;
-          font-weight: 600;
+          font-weight: 500;
           background: none;
           border: none;
           cursor: pointer;
           border-radius: var(--radius-md);
           transition: all 0.2s ease;
+          width: 100%;
         }
 
         .footer-link:hover {
           color: #FFFFFF;
-          background-color: rgba(255, 255, 255, 0.05);
+          background-color: rgba(255, 255, 255, 0.04);
         }
 
         .logout-btn {

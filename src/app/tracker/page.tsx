@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
-import { MobileNav } from '@/components/MobileNav';
 import { NewAdmissionModal } from '@/components/NewAdmissionModal';
 import { DataService } from '@/lib/dataService';
 import { Student, FeeRecord, PaymentStatus, ArtGroup } from '@/lib/types';
@@ -233,8 +232,6 @@ export default function AdmissionTrackerPage() {
             </div>
           </div>
         </main>
-
-        <MobileNav />
       </div>
 
       {/* Fee Payment Entry Confirmation Modal */}

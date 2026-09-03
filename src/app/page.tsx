@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
-import { MobileNav } from '@/components/MobileNav';
 import { NewAdmissionModal } from '@/components/NewAdmissionModal';
 import { DataService } from '@/lib/dataService';
 import { DashboardKPIs, Student } from '@/lib/types';
@@ -158,7 +157,6 @@ export default function DashboardPage() {
           <span>New Admission</span>
         </button>
 
-        <MobileNav />
       </div>
 
       <NewAdmissionModal

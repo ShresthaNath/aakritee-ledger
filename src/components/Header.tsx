@@ -32,12 +32,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
   return (
     <>
       <header className="header-bar">
-        {/* Left Side: Mobile Hamburger + Logo on Mobile, Search on Desktop */}
+        {/* Left Side: Mobile Hamburger & Search Input */}
         <div className="header-left">
           <button
             className="mobile-hamburger"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Navigation Menu"
+            aria-label="Toggle Menu"
           >
             <Menu size={22} />
           </button>
@@ -81,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
         </div>
       </header>
 
-      {/* Mobile Drawer Drawer matching Figma Node 204:1938 */}
+      {/* Mobile Menu Drawer */}
       {isMobileMenuOpen && (
         <div className="mobile-drawer-overlay animate-fade-in" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
@@ -172,43 +172,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
         .mobile-title {
           font-weight: 700;
           font-size: 16px;
-          color: #FCD602;
-        }
-
-        .search-container {
-          position: relative;
-          display: flex;
-          align-items: center;
-          width: 360px;
-        }
-
-        .search-icon {
-          position: absolute;
-          left: 16px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-muted);
-          pointer-events: none;
-          z-index: 5;
-        }
-
-        .search-input {
-          width: 100%;
-          height: 42px;
-          background-color: var(--bg-surface);
-          border: 1px solid var(--border-color);
-          color: var(--text-primary);
-          padding-left: 44px;
-          padding-right: 16px;
-          border-radius: 24px;
-          font-family: var(--font-body);
-          font-size: 13px;
-          outline: none;
-          transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-          border-color: var(--accent-yellow);
+          color: #FED602;
         }
 
         .header-actions {
@@ -281,7 +245,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           left: 0;
           width: 100vw;
           height: 100vh;
-          background-color: rgba(7, 10, 22, 0.8);
+          background-color: rgba(7, 10, 22, 0.85);
           backdrop-filter: blur(6px);
           z-index: 100;
         }
@@ -293,14 +257,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           border-right: 1px solid var(--border-color);
           display: flex;
           flex-direction: column;
-          padding: 24px 16px;
+          padding: 24px 0;
         }
 
         .drawer-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-bottom: 20px;
+          padding: 0 24px 20px 24px;
           border-bottom: 1px solid var(--border-color);
         }
 
@@ -318,7 +282,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
         .ledger-title {
           font-weight: 700;
           font-size: 18px;
-          color: #FCD602;
+          color: #FED602;
         }
 
         .close-btn {
@@ -331,34 +295,36 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
         .drawer-nav {
           display: flex;
           flex-direction: column;
-          gap: 8px;
-          margin-top: 24px;
+          gap: 4px;
+          margin-top: 16px;
           flex: 1;
         }
 
         .drawer-link {
           display: flex;
           align-items: center;
-          gap: 14px;
-          padding: 12px 16px;
-          border-radius: var(--radius-md);
-          color: #A0A5B5;
+          gap: 12px;
+          padding: 12px 24px;
+          width: 100%;
+          color: #8A94C2;
           text-decoration: none !important;
-          font-weight: 600;
+          font-weight: 500;
           font-size: 14px;
+          border-left: 4px solid transparent;
         }
 
         .drawer-link.active {
-          color: #FCD602;
-          background-color: rgba(252, 214, 2, 0.1);
-          border-left: 3px solid #FCD602;
+          color: #FED602 !important;
+          background-color: rgba(254, 214, 2, 0.15) !important;
+          border-left-color: #FED602 !important;
+          font-weight: 600 !important;
         }
 
         .drawer-footer {
           display: flex;
           flex-direction: column;
-          gap: 12px;
-          padding-top: 16px;
+          gap: 8px;
+          padding: 16px 12px 0 12px;
           border-top: 1px solid var(--border-color);
         }
 
@@ -367,10 +333,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenNewAdmission, onSearchChan
           align-items: center;
           gap: 12px;
           padding: 10px 14px;
-          color: #A0A5B5;
+          color: #8A94C2;
           text-decoration: none !important;
           font-size: 13px;
-          font-weight: 600;
+          font-weight: 500;
           background: none;
           border: none;
           cursor: pointer;
